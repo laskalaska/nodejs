@@ -1,4 +1,5 @@
 import * as constants from './constants.js'
+import fs from "fs";
 
 const defaultConfig = {
     logLevel: constants.level.INFO,
@@ -10,6 +11,15 @@ function enrichConfig(config) {
     config.scoreLevel = constants.scoreLevel[config.logLevel]
 }
 
+function readConfigFile(filePath) {
+    try {
+        const dataFile = fs.readFileSync(filePath, 'utf-8');
+        return JSON.parse(dataFile);
+    } catch (err) {
+        console.log('Error reading config file: ' + err);
+    }
+}
+
 function initConfig() {
     const config = defaultConfig;
     // const config = {
@@ -19,15 +29,23 @@ function initConfig() {
 
     const logLevel = process.env.LOG_LEVEL?.toUpperCase();
     const appender = process.env.LOG_APPENDER?.toUpperCase();
+    const configFile = process.env.LOG_CONFIG_FILE;
+    let fileConfig;
 
-    if (logLevel) {
-        // TODO check for ifExist, if not then return default
-        config.logLevel = logLevel;
+    if (configFile) {
+        fileConfig = readConfigFile(configFile);
     }
 
-    if (appender) {
-        // TODO check for ifExist, if not then return default
+    if (logLevel && constants.level[logLevel]) {
+        config.logLevel = logLevel;
+    } else if (fileConfig && fileConfig.logLevel) {
+        config.logLevel = fileConfig.logLevel?.toUpperCase();
+    }
+
+    if (appender && constants.appender[appender]) {
         config.appender = appender;
+    } else if (fileConfig && fileConfig.appender) {
+        config.appender = fileConfig.appender?.toUpperCase();
     }
 
     enrichConfig(config)
