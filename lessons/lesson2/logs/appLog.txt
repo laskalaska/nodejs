@@ -1,0 +1,7 @@
+Date: 1708984044007, level: INFO, category: app.js, message: {"yellow":"yellow","red":"red"}
+Date: 1708984044008, level: INFO, category: app.js, message: {"apple":"apple","banana":"banana"}
+Date: 1708984044014, level: ERROR, category: app.js, message: "ERROR occur"
+Date: 1708984044014, level: DEBUG, category: app.js, message: {"yellow":"yellow","red":"red"}
+Date: 1708984044014, level: TRACE, category: app.js, message: {"apple":"apple","banana":"banana"}
+Date: 1708984044014, level: INFO, category: handler.js, message: "First operand 3"
+Date: 1708984044015, level: INFO, category: handler.js, message: "Second operand 5"

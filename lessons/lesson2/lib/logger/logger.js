@@ -12,6 +12,12 @@ const logger = (category) => ({
     error: (message) => {
         executeLog(level.ERROR, category, message)
     },
+    debug: (message) => {
+        executeLog(level.DEBUG, category, message)
+    },
+    trace: (message) => {
+        executeLog(level.TRACE, category, message)
+    },
 })
 
 const appender = appenderStrategy.getAppender();

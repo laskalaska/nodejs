@@ -10,5 +10,7 @@ const log = logger.getLogger('app.js');
 log.info(color);
 log.info(fruit);
 log.error('ERROR occur');
+log.debug(color);
+log.trace(fruit);
 
 add(3, 5);
