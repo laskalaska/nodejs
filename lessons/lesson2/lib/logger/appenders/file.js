@@ -6,10 +6,18 @@ const ERROR_LEVEL_LOG_FILE = 'logs/appErrorLog.txt';
 
 function log(date, level, category, message) {
     const formattedMessage = formatMessage(date, level, category, message);
-    fs.writeFileSync(NORMAL_LEVEL_LOG_FILE, formattedMessage + '\n', {flag: 'a+'})
+    writeToFile(NORMAL_LEVEL_LOG_FILE, formattedMessage)
 
     if(level === constants.level.ERROR) {
-        fs.writeFileSync(ERROR_LEVEL_LOG_FILE, formattedMessage + '\n', {flag: 'a+'})
+        writeToFile(ERROR_LEVEL_LOG_FILE, formattedMessage)
+    }
+}
+
+async function writeToFile(file, message) {
+    try {
+        await fs.promises.writeFile(file, message + '\n', {flag: 'a+'})
+    } catch (err) {
+        console.error(err)
     }
 }
 
