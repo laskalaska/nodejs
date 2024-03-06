@@ -17,6 +17,7 @@ const scoreLevel = {
 const appender = {
     CONSOLE: 'CONSOLE',
     FILE: 'FILE',
+    CSV: 'CSV'
 }
 
 const formatter = {

@@ -3,10 +3,12 @@ import config from "./config.js";
 import consoleAppender from './appenders/console.js';
 import fileAppender from './appenders/file.js'
 import { getFormatter } from "./formatterStrategy.js";
+import csvAppender from "./appenders/csv.js"
 
 const appenders = {
     [constants.appender.CONSOLE]: consoleAppender,
     [constants.appender.FILE]: fileAppender,
+    [constants.appender.CSV]: csvAppender,
     [undefined]: consoleAppender
 }
 
