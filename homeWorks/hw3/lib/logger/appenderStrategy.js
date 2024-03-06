@@ -2,6 +2,7 @@ import * as constants from './constants.js';
 import config from "./config.js";
 import consoleAppender from './appenders/console.js';
 import fileAppender from './appenders/file.js'
+import { getFormatter } from "./formatterStrategy.js";
 
 const appenders = {
     [constants.appender.CONSOLE]: consoleAppender,
@@ -10,13 +11,8 @@ const appenders = {
 }
 
 function getAppender() {
-    // if(constants.appender.CONSOLE === config.appender) {
-    //     return consoleAppender
-    // }
-    //
-    // return consoleAppender;
-
-    return appenders[config.appender]
+    const outputFormat = getFormatter(config.formatter)
+    return appenders[config.appender](outputFormat)
 }
 
 export {getAppender}
