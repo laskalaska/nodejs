@@ -43,7 +43,7 @@ function createFileName() {
 
     const date = new Date();
 
-    return `app_${padZeros(date.getDay())}_${padZeros(date.getMonth() + 1)}_${date.getFullYear()}`;
+    return `app_${padZeros(date.getDate())}_${padZeros(date.getMonth() + 1)}_${date.getFullYear()}`;
 }
 
 function init() {
