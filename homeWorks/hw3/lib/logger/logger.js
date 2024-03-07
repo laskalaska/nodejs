@@ -3,28 +3,29 @@ import {level, scoreLevel} from './constants.js';
 import * as appenderStrategy from './appenderStrategy.js';
 
 const logger = (category) => ({
-    info: (message) => {
-        executeLog(level.INFO, category, message)
+    info: (...args) => {
+        executeLog(level.INFO, category, args)
     },
-    warn: (message) => {
-        executeLog(level.WARN, category, message)
+    warn: (...args) => {
+        executeLog(level.WARN, category, args)
     },
-    error: (message) => {
-        executeLog(level.ERROR, category, message)
+    error: (...args) => {
+        executeLog(level.ERROR, category, args)
     },
-    debug: (message) => {
-        executeLog(level.DEBUG, category, message)
+    debug: (...args) => {
+        executeLog(level.DEBUG, category, args)
     },
-    trace: (message) => {
-        executeLog(level.TRACE, category, message)
+    trace: (...args) => {
+        executeLog(level.TRACE, category, args)
     },
 })
 
 const appender = appenderStrategy.getAppender();
 
-function executeLog(level, category, message) {
+function executeLog(level, category, args) {
     if (scoreLevel[level] <= config.scoreLevel) {
-        appender.log(Date.now(), level, category, message)
+        const message = args.join(config.delimiter);
+        appender.log(Date.now(), level, category, message);
     }
 }
 

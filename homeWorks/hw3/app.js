@@ -13,4 +13,9 @@ log.error('ERROR occur');
 log.debug(color);
 log.trace(fruit);
 
+const data = 'text';
+const user = '123';
+
+log.info("Data", data, "User:", user, "Sdf", "test")
+
 add(3, 5);

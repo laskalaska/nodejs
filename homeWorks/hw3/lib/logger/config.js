@@ -5,7 +5,8 @@ const defaultConfig = {
     logLevel: constants.level.INFO,
     scoreLevel: constants.scoreLevel[constants.level.INFO],
     appender: constants.appender.CONSOLE,
-    formatter: constants.formatter.DEFAULT
+    formatter: constants.formatter.DEFAULT,
+    delimiter: constants.DELIMITER,
 }
 
 function enrichConfig(config) {
@@ -31,6 +32,7 @@ function initConfig() {
     const logLevel = process.env.LOG_LEVEL?.toUpperCase();
     const appender = process.env.LOG_APPENDER?.toUpperCase();
     const formatter = process.env.LOG_OUTPUT_FORMAT?.toUpperCase();
+    const delimiter = process.env.LOG_DELIMITER;
     const configFile = process.env.LOG_CONFIG_FILE;
     let fileConfig;
 
@@ -54,6 +56,12 @@ function initConfig() {
         config.formatter = formatter;
     } else if (fileConfig && fileConfig.formatter) {
         config.formatter = fileConfig.formatter?.toUpperCase();
+    }
+
+    if (delimiter) {
+        config.delimiter = delimiter;
+    } else if (fileConfig && fileConfig.delimiter) {
+        config.delimiter = fileConfig.delimiter?.toUpperCase();
     }
 
     enrichConfig(config)
