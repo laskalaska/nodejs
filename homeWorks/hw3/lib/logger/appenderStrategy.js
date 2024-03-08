@@ -14,7 +14,12 @@ const appenders = {
 
 function getAppender() {
     const outputFormat = getFormatter(config.formatter)
-    return appenders[config.appender](outputFormat)
+    // return appenders[config.appender](outputFormat)
+
+    return config.appender
+        .map(a => appenders[a])
+        .filter(a => !!a)
+        .map(a => a(outputFormat));
 }
 
 export {getAppender}

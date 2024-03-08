@@ -4,7 +4,7 @@ import fs from "fs";
 const defaultConfig = {
     logLevel: constants.level.INFO,
     scoreLevel: constants.scoreLevel[constants.level.INFO],
-    appender: constants.appender.CONSOLE,
+    appender: [constants.appender.CONSOLE],
     formatter: constants.formatter.DEFAULT,
     delimiter: constants.DELIMITER,
 }
@@ -30,7 +30,6 @@ function initConfig() {
     // }
 
     const logLevel = process.env.LOG_LEVEL?.toUpperCase();
-    const appender = process.env.LOG_APPENDER?.toUpperCase();
     const formatter = process.env.LOG_OUTPUT_FORMAT?.toUpperCase();
     const delimiter = process.env.LOG_DELIMITER;
     const configFile = process.env.LOG_CONFIG_FILE;
@@ -39,6 +38,7 @@ function initConfig() {
     if (configFile) {
         fileConfig = readConfigFile(configFile);
     }
+    const appender = parseAppenders(process.env.LOG_APPENDER || fileConfig.appender);
 
     if (logLevel && constants.level[logLevel]) {
         config.logLevel = logLevel;
@@ -46,10 +46,8 @@ function initConfig() {
         config.logLevel = fileConfig.logLevel?.toUpperCase();
     }
 
-    if (appender && constants.appender[appender]) {
+    if (appender.length > 0) {
         config.appender = appender;
-    } else if (fileConfig && fileConfig.appender) {
-        config.appender = fileConfig.appender?.toUpperCase();
     }
 
     if (formatter && constants.formatter[formatter]) {
@@ -70,5 +68,15 @@ function initConfig() {
 }
 
 const config = initConfig();
+
+function parseAppenders(appenders = '') {
+    return appenders.split(',')
+        .map(a => a.trim().toUpperCase())
+        .filter(validateAppender)
+}
+
+function validateAppender(appender) {
+    return appender && !!constants.appender[appender];
+}
 
 export default config;

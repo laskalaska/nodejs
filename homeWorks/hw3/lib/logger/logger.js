@@ -25,7 +25,8 @@ const appender = appenderStrategy.getAppender();
 function executeLog(level, category, args) {
     if (scoreLevel[level] <= config.scoreLevel) {
         const message = args.join(config.delimiter);
-        appender.log(Date.now(), level, category, message);
+        // appender.log(Date.now(), level, category, message);
+        appender.forEach(a => a.log(Date.now(), level, category, message))
     }
 }
 
